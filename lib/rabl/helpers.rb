@@ -17,8 +17,8 @@ module Rabl
       return nil unless data # nil or false
       return data.values.first if data.is_a?(Hash) # @user => :user
       data = @_object.send(data) if data.is_a?(Symbol) && @_object # :address
-      if data.respond_to?(:first) && data.first.respond_to?(:valid?)
-        data_name(data.first).pluralize
+      if data.respond_to?(:first) && data.respond_to?(:model_name)
+        data.model_name.element.pluralize
       else # actual data object
         object_name = @_collection_name.to_s.singularize if @_collection_name
         object_name ||= data.class.respond_to?(:model_name) ? data.class.model_name.element : data.class.to_s.downcase
